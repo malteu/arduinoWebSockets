@@ -41,7 +41,7 @@ WebSocketsServer::~WebSocketsServer() {
 }
 
 /**
- * calles to init the Websockets server
+ * calls to init the Websockets server
  */
 void WebSocketsServer::begin(void) {
     WSclient_t * client;
@@ -131,7 +131,7 @@ void WebSocketsServer::sendTXT(uint8_t num, String payload) {
 }
 
 /**
- * send text data to client all
+ * send text data to all clients
  * @param payload uint8_t *
  * @param length size_t
  * @param headerToPayload bool  (see sendFrame for more details)
@@ -191,7 +191,7 @@ void WebSocketsServer::sendBIN(uint8_t num, const uint8_t * payload, size_t leng
 }
 
 /**
- * send binary data to client all
+ * send binary data to all clients
  * @param payload uint8_t *
  * @param length size_t
  * @param headerToPayload bool  (see sendFrame for more details)
@@ -359,7 +359,7 @@ bool WebSocketsServer::clientIsConnected(WSclient_t * client) {
 }
 
 /**
- * Handle incomming Connection Request
+ * Handle incoming Connection Request
  */
 void WebSocketsServer::handleNewClients(void) {
     WSclient_t * client;
@@ -408,7 +408,7 @@ void WebSocketsServer::handleNewClients(void) {
                 IPAddress ip = client->tcp->remoteIP();
                 DEBUG_WEBSOCKETS("[WS-Server] no free space new client from %d.%d.%d.%d\n", ip[0], ip[1], ip[2], ip[3]);
 #else
-                DEBUG_WEBSOCKETS("[WS-Server] no free space new client\n");
+                DEBUG_WEBSOCKETS("[WS-Server] no free space for new client\n");
 #endif
                 tcpClient.stop();
             }
@@ -423,7 +423,7 @@ void WebSocketsServer::handleNewClients(void) {
 }
 
 /**
- * Handel incomming data from Client
+ * Handle incoming data from Client
  */
 void WebSocketsServer::handleClientData(void) {
 
@@ -522,7 +522,7 @@ void WebSocketsServer::handleHeader(WSclient_t * client) {
 
         if(ok) {
 
-            DEBUG_WEBSOCKETS("[WS-Server][%d][handleHeader] Websocket connection incomming.\n", client->num);
+            DEBUG_WEBSOCKETS("[WS-Server][%d][handleHeader] Websocket connection incoming.\n", client->num);
 
             // generate Sec-WebSocket-Accept key
             String sKey = acceptKey(client->cKey);

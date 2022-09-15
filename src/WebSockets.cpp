@@ -92,7 +92,7 @@ void WebSockets::sendFrame(WSclient_t * client, WSopcode_t opcode, uint8_t * pay
         return;
     }
 
-    DEBUG_WEBSOCKETS("[WS][%d][sendFrame] ------- send massage frame -------\n", client->num);
+    DEBUG_WEBSOCKETS("[WS][%d][sendFrame] ------- send message frame -------\n", client->num);
     DEBUG_WEBSOCKETS("[WS][%d][sendFrame] fin: %u opCode: %u mask: %u length: %u headerToPayload: %u\n", client->num, fin, opcode, mask, length, headerToPayload);
 
     if(opcode == WSop_text) {
@@ -302,7 +302,7 @@ void WebSockets::handleWebsocket(WSclient_t * client) {
     DEBUG_WEBSOCKETS("[WS][%d][handleWebsocket] mask: %u payloadLen: %u\n", client->num, mask, payloadLen);
 
     if(payloadLen > WEBSOCKETS_MAX_DATA_SIZE) {
-        DEBUG_WEBSOCKETS("[WS][%d][handleWebsocket] payload to big! (%u)\n", client->num, payloadLen);
+        DEBUG_WEBSOCKETS("[WS][%d][handleWebsocket] payload too big! (%u)\n", client->num, payloadLen);
         clientDisconnect(client, 1009);
         return;
     }
@@ -320,7 +320,7 @@ void WebSockets::handleWebsocket(WSclient_t * client) {
         payload = (uint8_t *) malloc(payloadLen + 1);
 
         if(!payload) {
-            DEBUG_WEBSOCKETS("[WS][%d][handleWebsocket] to less memory to handle payload %d!\n", client->num, payloadLen);
+            DEBUG_WEBSOCKETS("[WS][%d][handleWebsocket] memory too small to handle payload %d!\n", client->num, payloadLen);
             clientDisconnect(client, 1011);
             return;
         }
@@ -354,7 +354,7 @@ void WebSockets::handleWebsocket(WSclient_t * client) {
             sendFrame(client, WSop_pong, payload, payloadLen);
             break;
         case WSop_pong:
-            DEBUG_WEBSOCKETS("[WS][%d][handleWebsocket] get pong  (%s)\n", client->num, payload);
+            DEBUG_WEBSOCKETS("[WS][%d][handleWebsocket] got pong  (%s)\n", client->num, payload);
             break;
         case WSop_close:
             {
@@ -363,7 +363,7 @@ void WebSockets::handleWebsocket(WSclient_t * client) {
                     reasonCode = payload[0] << 8 | payload[1];
                 }
 
-                DEBUG_WEBSOCKETS("[WS][%d][handleWebsocket] get ask for close. Code: %d", client->num, reasonCode);
+                DEBUG_WEBSOCKETS("[WS][%d][handleWebsocket] got asked for close. Code: %d", client->num, reasonCode);
                 if(payloadLen > 2) {
                     DEBUG_WEBSOCKETS(" (%s)\n", (payload+2));
                 } else {
