@@ -68,9 +68,7 @@ public:
         void disconnect(void);
         void disconnect(uint8_t num);
 
-#if (WEBSOCKETS_NETWORK_TYPE == NETWORK_ESP8266)
         IPAddress remoteIP(uint8_t num);
-#endif
 
 protected:
         uint16_t _port;
