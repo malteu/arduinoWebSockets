@@ -28,7 +28,7 @@
 #include <Arduino.h>
 #include "WebSockets.h"
 
-#define WEBSOCKETS_SERVER_CLIENT_MAX  (5)
+#define WEBSOCKETS_SERVER_CLIENT_MAX  (4)
 
 
 
@@ -68,9 +68,7 @@ public:
         void disconnect(void);
         void disconnect(uint8_t num);
 
-#if (WEBSOCKETS_NETWORK_TYPE == NETWORK_ESP8266)
         IPAddress remoteIP(uint8_t num);
-#endif
 
 protected:
         uint16_t _port;
