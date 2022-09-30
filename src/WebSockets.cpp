@@ -48,6 +48,10 @@ extern "C" {
 
 #define WEBSOCKETS_MAX_HEADER_SIZE  (14)
 
+#ifndef NODEBUG_WEBSOCKETS
+char wsDebugBuf[WS_DEBUG_BUF_SIZE] = {0};
+#endif
+
 /**
  *
  * @param client WSclient_t *  ptr to the client struct

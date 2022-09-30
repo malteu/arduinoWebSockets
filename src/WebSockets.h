@@ -27,7 +27,11 @@
 
 #include <Arduino.h>
 
-//#define DEBUG_WEBSOCKETS(...) Serial1.printf( __VA_ARGS__ )
+#define WS_DEBUG_BUF_SIZE 200
+#if DEBUG
+extern char wsDebugBuf[WS_DEBUG_BUF_SIZE];
+#define DEBUG_WEBSOCKETS(...) snprintf(wsDebugBuf, WS_DEBUG_BUF_SIZE, __VA_ARGS__);Serial.print(wsDebugBuf);
+#endif
 
 #ifndef DEBUG_WEBSOCKETS
 #define DEBUG_WEBSOCKETS(...)
